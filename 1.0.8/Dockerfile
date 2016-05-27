@@ -1,14 +1,23 @@
-FROM debian:jessie
+FROM tutum/lamp:latest
 
 MAINTAINER Gildásio Júnior (gjuniioor@protonmail.com)
 
-RUN apt-get update && apt-get -y install apache2 mysql-server php5 php5-mysql php5-gd wget && rm -rf /var/lib/apt/lists/*
-RUN wget https://github.com/RandomStorm/DVWA/archive/v1.0.8.tar.gz -O dvwa.tar.gz
-RUN tar -xf dvwa.tar.gz
-RUN rm -rf /var/www/* && cp -r DVWA-1.0.8/* /var/www/*
-RUN rm -rf DVWA-1.0.8 && rm dvwa.tar.gz
+# Install DVWA
+RUN \
+	rm -rf /app/* && \
+	apt-get update && \
+	apt-get install -y wget && \
+	rm -rf /var/lib/apt/lists/* && \
+	wget https://github.com/RandomStorm/DVWA/archive/v1.0.8.tar.gz -O dvwa.tar.gz && \
+	tar -xf dvwa.tar.gz && \
+	cp -r DVWA-1.0.8/* /app/ && \
+	rm -rf DVWA-1.0.8 && \
+	rm -rf dvwa.tar.gz
+
+# Configure the db access
+RUN \
+	sed -i 's/root/admin/g' /app/config/config.inc.php && \
+	echo "sed -i \"s/p@ssw0rd/\$PASS/g\" /app/config/config.inc.php" >> /create_mysql_admin_user.sh
 
 EXPOSE 80 3306
-
-CMD ["service", "apache2", "start"]
-ENTRYPOINT [""]
+CMD ["/run.sh"]
