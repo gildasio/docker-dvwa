@@ -1,14 +1,14 @@
 # DVWA Docker
 
-A minimal [Docker] image with [Damn Vulnerable Web Application (DVWA)][dvwa] to you enjoy.
+[Damn Vulnerable Web Application (DVWA)][dvwa] on [Docker] to you enjoy.
 
 ## Use
 
-To use you need docker:
+To use you need `docker`:
 
 ~~~
 $ docker pull gjuniioor/dvwa:latest
-$ docker run -d -p 80:80 gjuniioor/dvwa
+$ docker run -d -p 80:80 -p 3306:3306 gjuniioor/dvwa
 ~~~
 
 And go to [localhost:80][local]
