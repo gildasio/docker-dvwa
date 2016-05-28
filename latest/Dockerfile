@@ -8,7 +8,7 @@ RUN \
 	apt-get update && \
 	apt-get install -y wget && \
 	rm -rf /var/lib/apt/lists/* && \
-	wget https://github.com/RandomStorm/DVWA/archive/v1.9.tar.gz -O dvwa.tar.gz && \
+	wget https://github.com/RandomStorm/DVWA/archive/master.tar.gz -O dvwa.tar.gz && \
 	tar -xf dvwa.tar.gz && \
 	cp -r DVWA-master/* /app/ && \
 	rm -rf DVWA-master && \
